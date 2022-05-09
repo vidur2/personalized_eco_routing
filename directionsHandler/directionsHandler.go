@@ -14,7 +14,7 @@ import (
 
 func HandleDirections(ctx *fasthttp.RequestCtx) error {
 	client := db.NewClient()
-	err := client.Connect()
+	err := client.Prisma.Connect()
 	prismaCtx := context.Background()
 
 	if err != nil {
@@ -61,7 +61,7 @@ func HandleDirections(ctx *fasthttp.RequestCtx) error {
 	ctx.Response.SetStatusCode(fasthttp.StatusOK)
 	ctx.Response.AppendBody(final)
 
-	client.Disconnect()
+	client.Prisma.Disconnect()
 
 	return nil
 }

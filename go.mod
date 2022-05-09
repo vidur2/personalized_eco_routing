@@ -9,11 +9,16 @@ require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/google/go-cmp v0.5.8 // indirect
+	github.com/guptarohit/asciigraph v0.5.1 // indirect
 	github.com/iancoleman/strcase v0.0.0-20190422225806-e506e3ef7365 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/klauspost/compress v1.15.0 // indirect
+	github.com/mattn/go-runewidth v0.0.7 // indirect
+	github.com/olekukonko/tablewriter v0.0.4 // indirect
 	github.com/prisma/prisma-client-go v0.15.0 // indirect
-	github.com/sajari/regression v1.0.1 // indirect
+	github.com/rocketlaunchr/dataframe-go v0.0.0-20201007021539-67b046771f0b // indirect
+	github.com/sajari/regression v1.0.1
 	github.com/shopspring/decimal v1.3.1 // indirect
 	github.com/sjwhitworth/golearn v0.0.0-20211014193759-a8b69c276cd8 // indirect
 	github.com/takuoki/gocase v1.0.0 // indirect
@@ -21,8 +26,10 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.36.0 // indirect
 	go.opencensus.io v0.23.0 // indirect
+	golang.org/x/exp v0.0.0-20200331195152-e8c3332aa8e5 // indirect
 	golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4 // indirect
 	golang.org/x/oauth2 v0.0.0-20220411215720-9780585627b5 // indirect
+	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20220502124256-b6088ccd6cba // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/api v0.78.0 // indirect

@@ -10,12 +10,12 @@ import (
 	"github.com/twpayne/go-polyline"
 )
 
-type DataCoordInput struct {
-	Lat            float64
-	Long           float64
-	Velocity       float64
-	DeltaElevation float64
-}
+// type DataCoordInput struct {
+// 	Lat            float64
+// 	Long           float64
+// 	Velocity       float64
+// 	DeltaElevation float64
+// }
 
 type DirectionsResponse struct {
 	GeocodedWaypoints []GeocodedElements `json:"geocoded_waypoints"`
@@ -78,7 +78,11 @@ func (l *LegElements) getGasConsumptionOverPolyline(user *db.UserModel) float32 
 	unitsConsumed := float32(0.)
 
 	speedLimit := l.getSpeedLimit()
-	userSpeed, _ := model.Predict([]float64{speedLimit})
+	userSpeed, err := model.Predict([]float64{speedLimit})
+
+	if err != nil {
+		userSpeed = speedLimit
+	}
 
 	latLongArray := l.Polyline.decodePolyline()
 	startLat := latLongArray[0][0]

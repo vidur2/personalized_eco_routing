@@ -34,5 +34,6 @@ func handleError(ctx *fasthttp.RequestCtx, err error) {
 
 func main() {
 	util.InitClient()
+
 	fasthttp.ListenAndServe(":8080", handler)
 }

@@ -21,8 +21,6 @@ func GetSpeedLimit(positions []LatitudeLongitude) []float32 {
 
 	req.SetRequestURI(finalUri)
 
-	fmt.Println(finalUri)
-
 	util.Client.Do(req, res)
 
 	err := json.Unmarshal(res.Body(), &limitsRes)

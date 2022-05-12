@@ -17,14 +17,18 @@ func GetSpeedLimit(positions []LatitudeLongitude) []float32 {
 	req := fasthttp.AcquireRequest()
 	res := fasthttp.AcquireResponse()
 
+	req.Header.SetMethod(fasthttp.MethodGet)
+
 	req.SetRequestURI(finalUri)
+
+	fmt.Println(finalUri)
 
 	util.Client.Do(req, res)
 
 	err := json.Unmarshal(res.Body(), &limitsRes)
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Speed Limit Error" + err.Error())
 		return []float32{}
 	}
 	retSlice := make([]float32, len(limitsRes.SpeedLimits))
@@ -38,7 +42,7 @@ func GetSpeedLimit(positions []LatitudeLongitude) []float32 {
 func parseInputParams(positions []LatitudeLongitude) string {
 	retString := ""
 	for idx, pos := range positions {
-		retString += fmt.Sprintf("%f", pos.Lat) + ", " + fmt.Sprintf("%f", pos.Long)
+		retString += fmt.Sprintf("%f", pos.Lat) + "," + fmt.Sprintf("%f", pos.Long)
 		if idx != len(positions)-1 {
 			retString += "|"
 		}

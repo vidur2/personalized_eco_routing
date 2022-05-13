@@ -1,5 +1,11 @@
 package main
 
+/*
+#cgo LDFLAGS: /Users/vidurmodgil/Desktop/ProgrammingProjects/line_integrals_fuel_efficiency/lib/libregression.a -ldl
+#include "/Users/vidurmodgil/Desktop/ProgrammingProjects/line_integrals_fuel_efficiency/lib/regression.h"
+*/
+import "C"
+
 import (
 	createuser "line_integrals_fuel_efficiency/createUserHandler"
 	datahandler "line_integrals_fuel_efficiency/dataHandler"
@@ -34,6 +40,6 @@ func handleError(ctx *fasthttp.RequestCtx, err error) {
 
 func main() {
 	util.InitClient()
-
+	C.print(C.CString("Listening on :8080"))
 	fasthttp.ListenAndServe(":8080", handler)
 }

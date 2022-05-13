@@ -1,5 +1,11 @@
 package datahandler
 
+/*
+#cgo LDFLAGS: /Users/vidurmodgil/Desktop/ProgrammingProjects/line_integrals_fuel_efficiency/lib/libregression.a -ldl
+#include "/Users/vidurmodgil/Desktop/ProgrammingProjects/line_integrals_fuel_efficiency/lib/regression.h"
+*/
+import "C"
+
 import (
 	"context"
 	"encoding/json"
@@ -7,21 +13,8 @@ import (
 	"line_integrals_fuel_efficiency/prisma/db"
 	"line_integrals_fuel_efficiency/util"
 
-	"github.com/sajari/regression"
 	"github.com/valyala/fasthttp"
 )
-
-type DataCoord struct {
-	ActualSpeed float32
-	SpeedLimt   float32
-}
-
-type DataCoordReq struct {
-	Email        string                                   `json:"email"`
-	ActualSpeeds []float32                                `json:"actual_speeds"`
-	Positions    []googleApiInteraction.LatitudeLongitude `json:"positions"`
-	Token        string                                   `json:"token"`
-}
 
 func DataHandler(ctx *fasthttp.RequestCtx) error {
 	var dataCoord DataCoordReq
@@ -47,7 +40,6 @@ func DataHandler(ctx *fasthttp.RequestCtx) error {
 		return err
 	}
 
-	var realModel regression.Regression
 	user, err := client.User.FindFirst(db.User.Email.Equals(dataCoord.Email)).Exec(tokCtx)
 
 	if err != nil {
@@ -55,35 +47,42 @@ func DataHandler(ctx *fasthttp.RequestCtx) error {
 		return err
 	}
 
-	model := user.DumpsModel
-
-	err = json.Unmarshal([]byte(model), &realModel)
-
-	if err != nil {
-		realModel = regression.Regression{}
-	}
+	xValues := make([][]float32, 0)
+	yValues := make([]float32, 0)
 
 	for idx, data := range limits {
 		client.UserData.CreateOne(db.UserData.ActualSpeed.Set(float64(dataCoord.ActualSpeeds[idx])), db.UserData.SpeedLimit.Set(float64(data)), db.UserData.UserEmail.Set(dataCoord.Email))
-		realModel.Train(regression.DataPoint(float64(dataCoord.ActualSpeeds[idx]), []float64{float64(data)}))
+		xValues = append(xValues, []float32{data})
+		yValues = append(yValues, dataCoord.ActualSpeeds[idx])
 	}
 
 	for _, data := range user.DataPoints() {
-		realModel.Train(regression.DataPoint(data.ActualSpeed, []float64{data.SpeedLimit}))
+		xValues = append(xValues, []float32{float32(data.ActualSpeed)})
+		yValues = append(yValues, float32(data.SpeedLimit))
 	}
 
-	err = realModel.Run()
+	dataInputs := RegressionInputs{
+		XValues: xValues,
+		YValues: yValues,
+	}
+
+	final, err := json.Marshal(dataInputs)
 
 	if err != nil {
 		client.Prisma.Disconnect()
 		return err
 	}
 
-	final, _ := json.Marshal(realModel)
+	model := C.train_regression(C.CString(string(final)))
+
+	if err != nil {
+		client.Prisma.Disconnect()
+		return err
+	}
 
 	row := client.User.UpsertOne(db.User.Email.Equals(dataCoord.Email))
 
-	_, err = row.Update(db.User.DumpsModel.Set(string(final))).Exec(tokCtx)
+	_, err = row.Update(db.User.DumpsModel.Set(C.GoString(model))).Exec(tokCtx)
 
 	client.Prisma.Disconnect()
 

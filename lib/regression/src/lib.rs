@@ -1,7 +1,6 @@
 mod regression;
 mod regression_inputs;
 
-use nalgebra::DMatrix;
 use regression::Regression;
 use regression_inputs::RegressionInputs;
 use std::ffi::{CStr, CString};
@@ -54,4 +53,11 @@ pub extern "C" fn predict_regression(
     return CString::new(serde_json::to_string(&ret_val).unwrap())
         .unwrap()
         .into_raw();
+}
+
+#[no_mangle]
+pub extern "C" fn print(name: *const libc::c_char) {
+    let buf_name = unsafe { CStr::from_ptr(name).to_bytes() };
+    let str_name = String::from_utf8(buf_name.to_vec()).unwrap();
+    println!("{}", str_name);
 }

@@ -1,18 +1,17 @@
-use serde::{Serialize, Deserialize};
 use nalgebra::DMatrix;
-use nalgebra::{Transpose, Inverse};
+use nalgebra::{Inverse, Transpose};
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 pub struct Regression {
     coeffs: Vec<f32>,
-    constant: f32
+    constant: f32,
 }
-
 
 impl Regression {
     pub fn predict(&self, input_values: &Vec<f32>) -> Option<f32> {
         if input_values.len() != self.coeffs.len() {
-            return None
+            return None;
         } else {
             let mut output = 0f32;
 
@@ -20,7 +19,7 @@ impl Regression {
                 output += self.coeffs[idx] * value
             }
 
-            return Some(output + self.constant)
+            return Some(output + self.constant);
         }
     }
 
@@ -33,7 +32,7 @@ impl Regression {
 
         return Self {
             constant: coeffs.pop().unwrap(),
-            coeffs
-        }
+            coeffs,
+        };
     }
 }

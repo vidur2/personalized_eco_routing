@@ -10,10 +10,9 @@ import (
 	"encoding/json"
 	"fmt"
 	datahandler "line_integrals_fuel_efficiency/dataHandler"
-	"testing"
 )
 
-func testRegression(t *testing.T) {
+func testRegression() {
 	coord := []float32{5.}
 	coords := make([][]float32, 0)
 	coords = append(coords, coord)

@@ -1,8 +1,8 @@
 use super::{layer::Layer, ActivationFunction, GradientFunction, LossFunction};
 
-pub struct NeuralNet<'a>{
+pub struct NeuralNet<'a> {
     net: Vec<Layer<'a>>,
-    loss_function: LossFunction
+    loss_function: LossFunction,
 }
 
 impl<'a> NeuralNet<'a> {
@@ -13,7 +13,7 @@ impl<'a> NeuralNet<'a> {
         state: &'a Vec<f32>,
         activation_function: Vec<ActivationFunction>,
         gradient_function: Vec<GradientFunction>,
-        loss_function: LossFunction
+        loss_function: LossFunction,
     ) -> Self {
         let mut layers = Vec::new();
         for layer_id in 0..amt_layers {
@@ -25,9 +25,9 @@ impl<'a> NeuralNet<'a> {
                 gradient_function[layer_id],
             ));
         }
-        return Self{
+        return Self {
             net: layers,
-            loss_function
+            loss_function,
         };
     }
 

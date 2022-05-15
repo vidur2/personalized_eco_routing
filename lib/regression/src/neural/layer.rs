@@ -1,6 +1,5 @@
 use super::{neuron::Neuron, ActivationFunction, GradientFunction};
 
-
 #[derive(Clone)]
 pub struct Layer<'a>(Vec<Neuron<'a>>);
 

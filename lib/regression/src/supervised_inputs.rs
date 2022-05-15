@@ -2,12 +2,12 @@ use nalgebra::DMatrix;
 use serde::Deserialize;
 
 #[derive(Deserialize)]
-pub struct RegressionInputs {
+pub struct SupervisedInputs {
     x_values: Vec<Vec<f32>>,
     y_values: Vec<f32>,
 }
 
-impl RegressionInputs {
+impl SupervisedInputs {
     pub fn get_as_matrix(&self) -> (DMatrix<f32>, DMatrix<f32>) {
         let mut x_values_flattened = Vec::new();
         let y_matrix = DMatrix::from_row_vector(self.y_values.len(), 1, &self.y_values.clone());

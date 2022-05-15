@@ -1,9 +1,10 @@
+mod neural;
 mod regression;
-mod regression_inputs;
+mod supervised_inputs;
 
 use regression::Regression;
-use regression_inputs::RegressionInputs;
 use std::ffi::{CStr, CString};
+use supervised_inputs::SupervisedInputs;
 
 #[no_mangle]
 pub extern "C" fn init_lib() {
@@ -20,7 +21,7 @@ pub extern "C" fn init_lib() {
 pub extern "C" fn train_regression(regression_input: *const libc::c_char) -> *const libc::c_char {
     let buf = unsafe { CStr::from_ptr(regression_input).to_bytes() };
 
-    let regression: RegressionInputs =
+    let regression: SupervisedInputs =
         serde_json::from_str(&String::from_utf8(buf.to_vec()).unwrap()).unwrap();
     let (a, b) = regression.get_as_matrix();
     let regr = Regression::train(a, b);
@@ -53,6 +54,13 @@ pub extern "C" fn predict_regression(
     return CString::new(serde_json::to_string(&ret_val).unwrap())
         .unwrap()
         .into_raw();
+}
+
+#[no_mangle]
+pub extern "C" fn train_neural_net(data_ptr: *const libc::c_char) {
+    let data_buf = unsafe { CStr::from_ptr(data_ptr).to_bytes() };
+    let data_str = String::from_utf8(data_buf.to_vec()).unwrap();
+    let inputs: SupervisedInputs = serde_json::from_str(&data_str).unwrap();
 }
 
 #[no_mangle]

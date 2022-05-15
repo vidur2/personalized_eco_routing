@@ -274,6 +274,7 @@ dependencies = [
  "libc",
  "log",
  "nalgebra",
+ "rand 0.3.23",
  "serde",
  "serde_json",
 ]

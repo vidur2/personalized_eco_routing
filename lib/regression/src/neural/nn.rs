@@ -1,16 +1,16 @@
 use super::{layer::Layer, ActivationFunction, GradientFunction, LossFunction};
 
-pub struct NeuralNet<'a> {
-    net: Vec<Layer<'a>>,
+pub struct NeuralNet {
+    net: Vec<Layer>,
     loss_function: LossFunction,
 }
 
-impl<'a> NeuralNet<'a> {
+impl NeuralNet {
     pub fn init_net(
         amt_layers: usize,
         amt_neurons_per_layer: Vec<usize>,
         amt_weights_per_neuron_by_layer: Vec<usize>,
-        state: &'a Vec<f32>,
+        state: Vec<f32>,
         activation_function: Vec<ActivationFunction>,
         gradient_function: Vec<GradientFunction>,
         loss_function: LossFunction,
@@ -20,7 +20,7 @@ impl<'a> NeuralNet<'a> {
             layers.push(Layer::init_layer(
                 amt_neurons_per_layer[layer_id],
                 amt_weights_per_neuron_by_layer[layer_id],
-                state,
+                state.clone(),
                 activation_function[layer_id],
                 gradient_function[layer_id],
             ));
@@ -31,20 +31,20 @@ impl<'a> NeuralNet<'a> {
         };
     }
 
-    pub fn predict(&mut self, input_state: &'a Vec<f32>) -> &'a Vec<f32> {
+    pub fn predict(&mut self, input_state: Vec<f32>) -> Vec<f32> {
         let mut prev_layer = input_state;
         for layer in self.net.iter_mut() {
-            prev_layer = &layer.forward_pass(prev_layer);
+            prev_layer = layer.forward_pass(prev_layer);
         }
 
         return prev_layer;
     }
 
-    // pub fn full_pass(&mut self, input_state: &'a Vec<f32>, expected_output: &'a Vec<f32>) {
-    //     let output = self.predict(input_state);
-    //     let diff = (self.loss_function)(&output, &expected_output);
-    //     for layer in self.net.iter_mut() {
-    //         layer.backward_pass(diff)
-    //     }
-    // }
+    pub fn full_pass(&mut self, input_state: Vec<f32>, expected_output: Vec<f32>) {
+        let output = self.predict(input_state);
+        let diff = (self.loss_function)(&output, &expected_output);
+        for layer in self.net.iter_mut() {
+            layer.backward_pass(diff)
+        }
+    }
 }

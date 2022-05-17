@@ -2,18 +2,18 @@ use super::{ActivationFunction, GradientFunction};
 use rand::{thread_rng, Rng};
 
 #[derive(Clone)]
-pub struct Neuron<'a> {
+pub struct Neuron {
     weights: Vec<f32>,
     bias: f32,
-    input_state: &'a Vec<f32>,
+    input_state: Vec<f32>,
     activation_function: fn(input: f32) -> f32,
     gradient_function: fn(weights: &Vec<f32>, inputs: &Vec<f32>, diff: f32) -> Vec<f32>,
 }
 
-impl<'a> Neuron<'a> {
+impl Neuron {
     pub fn init_neuron(
         num_weights: usize,
-        state: &'a Vec<f32>,
+        state: Vec<f32>,
         activation_function: ActivationFunction,
         gradient_function: GradientFunction,
     ) -> Self {
@@ -32,13 +32,13 @@ impl<'a> Neuron<'a> {
         };
     }
 
-    pub fn forward_pass(&mut self, input_state: &'a Vec<f32>) -> f32 {
-        self.input_state = input_state;
-        return (self.activation_function)(self.dot(input_state) + self.bias);
+    pub fn forward_pass(&mut self, input_state: Vec<f32>) -> f32 {
+        self.input_state = input_state.clone();
+        return (self.activation_function)(self.dot(&input_state) + self.bias);
     }
 
     pub fn backward_pass(&mut self, diff: f32) {
-        self.weights = (self.gradient_function)(&self.weights, self.input_state, diff);
+        self.weights = (self.gradient_function)(&self.weights, &self.input_state, diff);
         self.bias += diff
     }
 

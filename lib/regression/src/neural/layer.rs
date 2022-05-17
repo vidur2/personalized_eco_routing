@@ -1,13 +1,13 @@
 use super::{neuron::Neuron, ActivationFunction, GradientFunction};
 
 #[derive(Clone)]
-pub struct Layer<'a>(Vec<Neuron<'a>>);
+pub struct Layer(Vec<Neuron>);
 
-impl<'a> Layer<'a> {
+impl Layer {
     pub fn init_layer(
         amt_neurons: usize,
         amt_weights: usize,
-        state: &'a Vec<f32>,
+        state: Vec<f32>,
         activation_function: ActivationFunction,
         gradient_function: GradientFunction,
     ) -> Self {
@@ -15,7 +15,7 @@ impl<'a> Layer<'a> {
         for _ in 0..amt_neurons {
             layer.push(Neuron::init_neuron(
                 amt_weights,
-                state,
+                state.clone(),
                 activation_function,
                 gradient_function,
             ))
@@ -24,10 +24,10 @@ impl<'a> Layer<'a> {
         return Self(layer);
     }
 
-    pub fn forward_pass(&mut self, input_state: &'a Vec<f32>) -> Vec<f32> {
+    pub fn forward_pass(&mut self, input_state: Vec<f32>) -> Vec<f32> {
         let mut outputs = Vec::new();
         for neuron in self.0.iter_mut() {
-            outputs.push(neuron.forward_pass(input_state))
+            outputs.push(neuron.forward_pass(input_state.clone()))
         }
 
         return outputs;

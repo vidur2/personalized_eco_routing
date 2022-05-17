@@ -1,10 +1,12 @@
-mod neural;
+// mod neural;
 mod regression;
 mod supervised_inputs;
 
 use regression::Regression;
 use std::ffi::{CStr, CString};
 use supervised_inputs::SupervisedInputs;
+// use neural::neural_inputs::NeuralInputs;
+// use neural::nn::NeuralNet;
 
 #[no_mangle]
 pub extern "C" fn init_lib() {
@@ -56,12 +58,18 @@ pub extern "C" fn predict_regression(
         .into_raw();
 }
 
-#[no_mangle]
-pub extern "C" fn train_neural_net(data_ptr: *const libc::c_char) {
-    let data_buf = unsafe { CStr::from_ptr(data_ptr).to_bytes() };
-    let data_str = String::from_utf8(data_buf.to_vec()).unwrap();
-    let inputs: SupervisedInputs = serde_json::from_str(&data_str).unwrap();
-}
+// #[no_mangle]
+// pub extern "C" fn train_neural_net(data_ptr: *const libc::c_char) -> *const libc::c_char {
+//     let data_buf = unsafe { CStr::from_ptr(data_ptr).to_bytes() };
+//     let data_str = String::from_utf8(data_buf.to_vec()).unwrap();
+//     let mut inputs: NeuralInputs = serde_json::from_str(&data_str).unwrap();
+//     for (idx, y_coord) in inputs.datapoints.y_values.iter_mut().enumerate() {
+//         let x_coord = inputs.datapoints.x_values[idx];
+//         inputs.nn.train(x_coord, vec![y_coord]);
+//     }
+
+//     return CString::new(serde_json::to_string(&inputs.nn).unwrap()).unwrap().into_raw()
+// }
 
 #[no_mangle]
 pub extern "C" fn print(name: *const libc::c_char) {

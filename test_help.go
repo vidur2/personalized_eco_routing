@@ -13,12 +13,12 @@ import (
 )
 
 func testRegression() {
-	coord := []float32{5.}
+	coord := []float32{5., 1.}
 	coords := make([][]float32, 0)
 	coords = append(coords, coord)
-	coord = []float32{2.}
+	coord = []float32{2., 3.}
 	coords = append(coords, coord)
-	coord = []float32{1.}
+	coord = []float32{1., 1.}
 	coords = append(coords, coord)
 	fmt.Println(coords)
 	datapoints := datahandler.RegressionInputs{
@@ -32,7 +32,7 @@ func testRegression() {
 
 	fmt.Println(C.GoString(model))
 
-	output := C.predict_regression(C.CString("[[3]]"), model)
+	output := C.predict_regression(C.CString("[[3, 1]]"), model)
 
 	fmt.Println(C.GoString(output))
 }

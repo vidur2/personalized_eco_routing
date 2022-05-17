@@ -1,6 +1,6 @@
 # line_integrals_fuel_efficiency
 ## Proof of Concept
-Goals:
+**Goals:**
 <ul>
   <li>Calculate hypothetical fuel consumed along a route based on MPG and speed limits</li>
   <li>

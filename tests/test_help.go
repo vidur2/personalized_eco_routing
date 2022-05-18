@@ -32,7 +32,7 @@ func testRegression() {
 
 	fmt.Println(C.GoString(model))
 
-	output := C.predict_regression(C.CString("[[3, 1]]"), model)
+	output := C.predict_regression(C.CString("[[3.1, 1.2]]"), model)
 
 	fmt.Println(C.GoString(output))
 }

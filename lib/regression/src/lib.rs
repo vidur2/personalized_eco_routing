@@ -77,3 +77,21 @@ pub extern "C" fn print(name: *const libc::c_char) {
     let str_name = String::from_utf8(buf_name.to_vec()).unwrap();
     println!("{}", str_name);
 }
+
+#[cfg(test)]
+mod test {
+    use crate::{Regression, train_regression, predict_regression};
+    use crate::{CStr, CString};
+
+    #[test]
+    fn test_train_regression() {
+        let test_string = String::from(r#"{
+            "x_values": [[1,2], [2,3]],
+            "y_values": [2,5]
+        }"#);
+        let mut cstr = CString::new(test_string).unwrap().into_raw();
+        let regr_model = train_regression(cstr);
+        cstr = CString::new("[[3,1]]").unwrap().into_raw();
+        predict_regression(cstr, regr_model);
+    }
+}

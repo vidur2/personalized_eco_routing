@@ -1,4 +1,4 @@
-package main
+package tests
 
 // func TestRoutesPreffered(t *testing.T) {
 // 	util.InitClient()

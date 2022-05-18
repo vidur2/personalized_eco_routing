@@ -1,4 +1,4 @@
-package main
+package tests
 
 /*
 #cgo LDFLAGS: /Users/vidurmodgil/Desktop/ProgrammingProjects/line_integrals_fuel_efficiency/lib/libregression.a -ldl

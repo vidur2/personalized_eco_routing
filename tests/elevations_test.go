@@ -1,4 +1,4 @@
-package main
+package tests
 
 import (
 	"line_integrals_fuel_efficiency/googleApiInteraction"

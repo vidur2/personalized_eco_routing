@@ -3,6 +3,7 @@ package createuser
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"line_integrals_fuel_efficiency/prisma/db"
 	"line_integrals_fuel_efficiency/util"
 
@@ -26,10 +27,12 @@ func HandleCreateUser(ctx *fasthttp.RequestCtx) error {
 	}
 
 	prismaCtx := context.Background()
-	err = util.VerifyToken(createUser.Token, prismaCtx)
+	valid, err := util.VerifyToken(createUser.Token, prismaCtx, createUser.Username)
 
 	if err != nil {
 		return err
+	} else if !valid {
+		return fmt.Errorf("verification error: invalid token information")
 	}
 
 	client := db.NewClient()

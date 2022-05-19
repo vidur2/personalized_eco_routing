@@ -9,6 +9,7 @@ import "C"
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"line_integrals_fuel_efficiency/googleApiInteraction"
 	"line_integrals_fuel_efficiency/prisma/db"
 	"line_integrals_fuel_efficiency/util"
@@ -26,10 +27,12 @@ func DataHandler(ctx *fasthttp.RequestCtx) error {
 		return err
 	}
 
-	err = util.VerifyToken(dataCoord.Token, tokCtx)
+	valid, err := util.VerifyToken(dataCoord.Token, tokCtx, dataCoord.Email)
 
 	if err != nil {
 		return err
+	} else if !valid {
+		return fmt.Errorf("verification error: invalid token information")
 	}
 
 	limits := googleApiInteraction.GetSpeedLimit(dataCoord.Positions)

@@ -29,10 +29,12 @@ func HandleDirections(ctx *fasthttp.RequestCtx) error {
 		return err
 	}
 
-	err = util.VerifyToken(infor.OauthToken, prismaCtx)
+	valid, err := util.VerifyToken(infor.OauthToken, prismaCtx, infor.User)
 
 	if err != nil {
 		return err
+	} else if !valid {
+		return fmt.Errorf("verification error: invalid token information")
 	}
 
 	routeInformation, err := googleApiInteraction.DirectionRequest(infor.Start, infor.End)

@@ -1,5 +1,4 @@
 .env
+line_integrals_fuel_efficiency
 .vscode
-/lib
-*/target
-*.a
+.DS_Store

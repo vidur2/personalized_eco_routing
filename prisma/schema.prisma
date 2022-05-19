@@ -1,14 +1,23 @@
 datasource db {
-    url="postgres://tqdkbxuvxvqrod:b0952bba8a21b92a57cac9d61b83644e71249a6be449c96c5113d29d1f175c9f@ec2-3-217-113-25.compute-1.amazonaws.com:5432/d38s03hh1n935j"
-    provider="postgresql"
+  url      = "postgres://tqdkbxuvxvqrod:b0952bba8a21b92a57cac9d61b83644e71249a6be449c96c5113d29d1f175c9f@ec2-3-217-113-25.compute-1.amazonaws.com:5432/d38s03hh1n935j"
+  provider = "postgresql"
 }
 
 generator generator {
-    provider="go run github.com/prisma/prisma-client-go"
+  provider = "go run github.com/prisma/prisma-client-go"
 }
 
 model User {
-    email String @unique @id
-    dumpsModel String
-    fuelEfficiency Float
+  email          String     @id @unique
+  dumpsModel     String
+  fuelEfficiency Float
+  dataPoints     UserData[]
+}
+
+model UserData {
+  id          Int     @unique @default(autoincrement())
+  actualSpeed Float
+  speedLimit  Float
+  User        User?   @relation(fields: [userEmail], references: [email])
+  userEmail   String?
 }

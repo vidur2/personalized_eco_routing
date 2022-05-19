@@ -14,7 +14,7 @@ import (
 
 func HandleDirections(ctx *fasthttp.RequestCtx) error {
 	client := db.NewClient()
-	err := client.Connect()
+	err := client.Prisma.Connect()
 	prismaCtx := context.Background()
 
 	if err != nil {
@@ -29,10 +29,12 @@ func HandleDirections(ctx *fasthttp.RequestCtx) error {
 		return err
 	}
 
-	err = util.VerifyToken(infor.OauthToken, prismaCtx)
+	valid, err := util.VerifyToken(infor.OauthToken, prismaCtx, infor.User, types.ClientId(types.ProductionMode))
 
 	if err != nil {
 		return err
+	} else if !valid {
+		return fmt.Errorf("verification error: invalid token information")
 	}
 
 	routeInformation, err := googleApiInteraction.DirectionRequest(infor.Start, infor.End)
@@ -61,7 +63,7 @@ func HandleDirections(ctx *fasthttp.RequestCtx) error {
 	ctx.Response.SetStatusCode(fasthttp.StatusOK)
 	ctx.Response.AppendBody(final)
 
-	client.Disconnect()
+	client.Prisma.Disconnect()
 
 	return nil
 }

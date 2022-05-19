@@ -8,6 +8,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
+const KEY = "AIzaSyBNMIScjW-PYeaEMdjst9oXVq2vbvIehSE"
 const BASE_URI_DIRECTIONS = "https://maps.googleapis.com/maps/api/directions/json?origin=%v&destination=%v&key=AIzaSyBNMIScjW-PYeaEMdjst9oXVq2vbvIehSE&alternatives=true"
 
 func DirectionRequest(origin string, destination string) (DirectionsResponse, error) {

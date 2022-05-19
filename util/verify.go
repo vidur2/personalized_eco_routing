@@ -6,8 +6,14 @@ import (
 	"time"
 )
 
-// var clientId string = "1618104708054-9r9s1c4alg36erliucho9t52n32n6dgq.apps.googleusercontent.com"
-var clientId string = "618104708054-9r9s1c4alg36erliucho9t52n32n6dgq.apps.googleusercontent.com"
+type ClientId string
+
+const (
+	TestMode       ClientId = "618104708054-9r9s1c4alg36erliucho9t52n32n6dgq.apps.googleusercontent.com"
+	ProductionMode ClientId = "1618104708054-9r9s1c4alg36erliucho9t52n32n6dgq.apps.googleusercontent.com"
+)
+
+// var clientId string =
 
 type Claims struct {
 	Email         string `json:"email"`
@@ -19,8 +25,8 @@ type Claims struct {
 	Locale        string `json:"locale"`
 }
 
-func VerifyToken(token string, ctx context.Context, email string) (bool, error) {
-	payload, err := Verify.Validate(ctx, token, clientId)
+func VerifyToken(token string, ctx context.Context, email string, clientId ClientId) (bool, error) {
+	payload, err := Verify.Validate(ctx, token, string(clientId))
 
 	if err != nil {
 		return false, err
@@ -37,7 +43,7 @@ func VerifyToken(token string, ctx context.Context, email string) (bool, error) 
 			return false, err
 		}
 
-		if currentTime <= int64(payload.Expires) && payload.Audience == clientId && email == claims.Email {
+		if currentTime <= int64(payload.Expires) && payload.Audience == string(clientId) && email == claims.Email {
 			return true, nil
 		} else {
 			return false, nil

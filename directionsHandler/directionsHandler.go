@@ -29,7 +29,7 @@ func HandleDirections(ctx *fasthttp.RequestCtx) error {
 		return err
 	}
 
-	valid, err := util.VerifyToken(infor.OauthToken, prismaCtx, infor.User)
+	valid, err := util.VerifyToken(infor.OauthToken, prismaCtx, infor.User, util.ClientId(util.ProductionMode))
 
 	if err != nil {
 		return err

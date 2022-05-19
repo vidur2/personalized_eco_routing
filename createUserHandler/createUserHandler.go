@@ -27,7 +27,7 @@ func HandleCreateUser(ctx *fasthttp.RequestCtx) error {
 	}
 
 	prismaCtx := context.Background()
-	valid, err := util.VerifyToken(createUser.Token, prismaCtx, createUser.Username)
+	valid, err := util.VerifyToken(createUser.Token, prismaCtx, createUser.Username, util.ClientId(util.ProductionMode))
 
 	if err != nil {
 		return err

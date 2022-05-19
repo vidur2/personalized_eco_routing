@@ -27,7 +27,7 @@ func DataHandler(ctx *fasthttp.RequestCtx) error {
 		return err
 	}
 
-	valid, err := util.VerifyToken(dataCoord.Token, tokCtx, dataCoord.Email)
+	valid, err := util.VerifyToken(dataCoord.Token, tokCtx, dataCoord.Email, util.ClientId(util.ProductionMode))
 
 	if err != nil {
 		return err

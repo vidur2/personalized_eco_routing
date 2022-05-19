@@ -82,7 +82,9 @@ func DataHandler(ctx *fasthttp.RequestCtx) error {
 
 	row := client.User.UpsertOne(db.User.Email.Equals(dataCoord.Email))
 
-	_, err = row.Update(db.User.DumpsModel.Set(C.GoString(model))).Exec(tokCtx)
+	_, err = row.Create(
+		db.User.Email.Set("vmod2005@gmail.com"), db.User.DumpsModel.Set(""), db.User.FuelEfficiency.Set(50),
+	).Update(db.User.DumpsModel.Set(C.GoString(model))).Exec(tokCtx)
 
 	client.Prisma.Disconnect()
 

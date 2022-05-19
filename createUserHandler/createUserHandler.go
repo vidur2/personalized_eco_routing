@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"line_integrals_fuel_efficiency/prisma/db"
 	"line_integrals_fuel_efficiency/util"
+	"line_integrals_fuel_efficiency/util/types"
 
 	"github.com/sajari/regression"
 	"github.com/valyala/fasthttp"
@@ -27,7 +28,7 @@ func HandleCreateUser(ctx *fasthttp.RequestCtx) error {
 	}
 
 	prismaCtx := context.Background()
-	valid, err := util.VerifyToken(createUser.Token, prismaCtx, createUser.Username, util.ClientId(util.ProductionMode))
+	valid, err := util.VerifyToken(createUser.Token, prismaCtx, createUser.Username, types.ClientId(types.ProductionMode))
 
 	if err != nil {
 		return err

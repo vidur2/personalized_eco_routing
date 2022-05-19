@@ -13,6 +13,7 @@ import (
 	"line_integrals_fuel_efficiency/googleApiInteraction"
 	"line_integrals_fuel_efficiency/prisma/db"
 	"line_integrals_fuel_efficiency/util"
+	"line_integrals_fuel_efficiency/util/types"
 
 	"github.com/valyala/fasthttp"
 )
@@ -27,7 +28,7 @@ func DataHandler(ctx *fasthttp.RequestCtx) error {
 		return err
 	}
 
-	valid, err := util.VerifyToken(dataCoord.Token, tokCtx, dataCoord.Email, util.ClientId(util.ProductionMode))
+	valid, err := util.VerifyToken(dataCoord.Token, tokCtx, dataCoord.Email, types.ClientId(types.ProductionMode))
 
 	if err != nil {
 		return err

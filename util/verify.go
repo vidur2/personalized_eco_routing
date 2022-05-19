@@ -3,14 +3,8 @@ package util
 import (
 	"context"
 	"encoding/json"
+	"line_integrals_fuel_efficiency/util/types"
 	"time"
-)
-
-type ClientId string
-
-const (
-	TestMode       ClientId = "618104708054-9r9s1c4alg36erliucho9t52n32n6dgq.apps.googleusercontent.com"
-	ProductionMode ClientId = "1618104708054-9r9s1c4alg36erliucho9t52n32n6dgq.apps.googleusercontent.com"
 )
 
 // var clientId string =
@@ -25,7 +19,7 @@ type Claims struct {
 	Locale        string `json:"locale"`
 }
 
-func VerifyToken(token string, ctx context.Context, email string, clientId ClientId) (bool, error) {
+func VerifyToken(token string, ctx context.Context, email string, clientId types.ClientId) (bool, error) {
 	payload, err := Verify.Validate(ctx, token, string(clientId))
 
 	if err != nil {

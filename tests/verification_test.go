@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"line_integrals_fuel_efficiency/util"
+	"line_integrals_fuel_efficiency/util/types"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -13,7 +14,7 @@ var token string = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ4NmYxNjQ4MjAwNWEyY2RhZjI2ZDky
 
 func TestVerification(t *testing.T) {
 	util.InitClient()
-	valid, err := util.VerifyToken(token, context.Background(), "vmod2005@gmail.com", util.ClientId(util.TestMode))
+	valid, err := util.VerifyToken(token, context.Background(), "vmod2005@gmail.com", types.ClientId(types.TestMode))
 	if err != nil {
 		fmt.Println(err)
 	}

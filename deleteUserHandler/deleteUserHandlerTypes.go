@@ -1,4 +1,4 @@
-package deleteUserHandler
+package deleteuserhandler
 
 type DeleteUserOptions struct {
 	Email   string `json:"email"`

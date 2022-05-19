@@ -1,4 +1,4 @@
-package deleteUserHandler
+package deleteuserhandler
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-func DeleteUserHandler(ctx *fasthttp.RequestCtx) error {
+func HandleDeleteUser(ctx *fasthttp.RequestCtx) error {
 	idCtx := context.Background()
 
 	var deleteOptions DeleteUserOptions

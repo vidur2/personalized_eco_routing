@@ -9,7 +9,7 @@ import "C"
 import (
 	createuser "line_integrals_fuel_efficiency/createUserHandler"
 	datahandler "line_integrals_fuel_efficiency/dataHandler"
-	"line_integrals_fuel_efficiency/deleteUserHandler"
+	deleteuserhandler "line_integrals_fuel_efficiency/deleteUserHandler"
 	directionshandler "line_integrals_fuel_efficiency/directionsHandler"
 	"line_integrals_fuel_efficiency/util"
 
@@ -27,7 +27,7 @@ func handler(ctx *fasthttp.RequestCtx) {
 		err := createuser.HandleCreateUser(ctx)
 		handleError(ctx, err)
 	case "/delete_user":
-		err := deleteUserHandler.DeleteUserHandler(ctx)
+		err := deleteuserhandler.HandleDeleteUser(ctx)
 		handleError(ctx, err)
 	}
 }

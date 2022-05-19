@@ -6,7 +6,8 @@ import (
 	"time"
 )
 
-var clientId string = "123306351755-64eprajhoiiips9vbvdl0c1m66qrau0t.apps.googleusercontent.com"
+// var clientId string = "1618104708054-9r9s1c4alg36erliucho9t52n32n6dgq.apps.googleusercontent.com"
+var clientId string = "618104708054-9r9s1c4alg36erliucho9t52n32n6dgq.apps.googleusercontent.com"
 
 type Claims struct {
 	Email         string `json:"email"`

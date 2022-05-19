@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"line_integrals_fuel_efficiency/prisma/db"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPrisma(t *testing.T) {
@@ -25,11 +27,11 @@ func TestPrisma(t *testing.T) {
 		fmt.Println(err)
 	}
 
+	assert.Nil(t, err)
+
 	_, err = client.User.FindUnique(db.User.Email.Equals("vmod2005@gmail.com")).Delete().Exec(prismaCtx)
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	assert.Nil(t, err)
 
 	client.Prisma.Disconnect()
 }

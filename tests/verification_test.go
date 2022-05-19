@@ -1,0 +1,21 @@
+package tests
+
+import (
+	"context"
+	"fmt"
+	"line_integrals_fuel_efficiency/util"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
+
+var token string = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImIxYTgyNTllYjA3NjYwZWYyMzc4MWM4NWI3ODQ5YmZhMGExYzgwNmMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAxNjUxMDI4NzA0NDM0NjI1NjE1IiwiZW1haWwiOiJ2bW9kMjAwNUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IjdqZ1ZYTW5vWWs3Y1hGdjktckNhNUEiLCJpYXQiOjE2NTI5NzI2MjAsImV4cCI6MTY1Mjk3NjIyMCwianRpIjoiOWRmMmM0ZjlhZTMxMzcxZGE3MTYwNmI5ZWU4M2VhNmFhMmE4N2EwMiJ9.L-1YlkCconQeH-5G6daxg5g4bOJ95a7z_jyYhu4uZcoI9l9runy_TJGfPi1Gd4R-MbFU8V8C2sYJ4N36H5LZp8uekSTVrFPervx4BJPfyRpfio25FFAcZYpuxJ7-tHQ8AOHFqMRqH8zGYlAir85ki243WbbX6KR089p2cUlMFrXsUeMwtav_-PaYNrnXkABijs90eAieH6XtcG3CGR0zrWx13KGpv3VdUSKE_MQD_bACtkrDjOBjAas8TA3M587BZRIXdC-B3Qz_kODwhHoMxfgcRF-ctmizjcuQVYEFaUiEoa3SQPYR4dFfj38_GT0i2YYd-EMswAfO-t8mI-Uowg"
+
+func TestVerification(t *testing.T) {
+	util.InitClient()
+	valid, err := util.VerifyToken(token, context.Background(), "vmod2005@gmail.com")
+	if err != nil {
+		fmt.Println(err)
+	}
+	assert.Equal(t, valid, true, "Token is invalid")
+}

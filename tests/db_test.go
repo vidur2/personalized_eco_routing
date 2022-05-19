@@ -21,6 +21,15 @@ func TestPrisma(t *testing.T) {
 		db.User.FuelEfficiency.Set(49.1),
 	)
 	_, err := updateObj.Exec((prismaCtx))
-	fmt.Println(err)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	_, err = client.User.FindUnique(db.User.Email.Equals("vmod2005@gmail.com")).Delete().Exec(prismaCtx)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	client.Prisma.Disconnect()
 }

@@ -12,8 +12,8 @@ build:
 run:
 	RUST_LOG=trace ./line_integrals_fuel_efficiency
 
-.PHONY: test-all-lib
-test-all-lib:
+.PHONY: test
+test:
 	make test-rust-lib && make test-go-lib
 
 # This is just for running the Rust lib tests natively via cargo.

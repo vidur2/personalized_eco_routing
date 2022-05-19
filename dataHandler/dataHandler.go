@@ -18,7 +18,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-func DataHandler(ctx *fasthttp.RequestCtx) error {
+func HandleData(ctx *fasthttp.RequestCtx) error {
 	var dataCoord DataCoordReq
 	tokCtx := context.Background()
 

@@ -21,7 +21,7 @@ func handler(ctx *fasthttp.RequestCtx) {
 	case "/get_directions":
 		directionshandler.HandleDirections(ctx)
 	case "/update_model":
-		err := datahandler.DataHandler(ctx)
+		err := datahandler.HandleData(ctx)
 		handleError(ctx, err)
 	case "/create_user":
 		err := createuser.HandleCreateUser(ctx)

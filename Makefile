@@ -4,6 +4,7 @@ ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
 .PHONY: build
 build:
+	export CC=gcc
 	cd lib/regression && cargo build --release
 	cp lib/regression/target/release/libregression.a lib/
 	go build line_integrals_fuel_efficiency
@@ -29,6 +30,10 @@ check:
 .PHONY: test-go-lib
 test-go-lib:
 	cd tests && go test
+
+.PHONY: build-raspi
+build-raspi:
+	 CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 go build -v -o line_integrals_fuel_efficiency -ldflags="-extld=$CC"
 
 .PHONY: clean
 clean:

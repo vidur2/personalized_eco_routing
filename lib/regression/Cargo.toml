@@ -9,7 +9,6 @@ log = "0.4.14"
 nalgebra = "0.9.0"
 rand = "*"
 serde_json = "*"
-serde_closure="*"
 
 [dependencies.serde]
 features = ["derive"]

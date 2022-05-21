@@ -19,7 +19,7 @@ type ElevationInformationElement struct {
 	Resolution float64 `json:"resolution"`
 }
 
-const BASE_URI_ELEVATIONS = "https://maps.googleapis.com/maps/api/elevation/json?locations=%v, %v&key=AIzaSyBNMIScjW-PYeaEMdjst9oXVq2vbvIehSE"
+const BASE_URI_ELEVATIONS = "https://maps.googleapis.com/maps/api/elevation/json?locations=%v,%v&key=AIzaSyBNMIScjW-PYeaEMdjst9oXVq2vbvIehSE"
 
 func GetElevation(lat float64, long float64) (ElevationInformation, error) {
 	req := fasthttp.AcquireRequest()

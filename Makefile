@@ -21,6 +21,10 @@ test:
 test-rust-lib:
 	cd lib/regression && RUST_LOG=trace cargo test -- --nocapture
 
+.PHONY: check
+check:
+	cd lib/regression && cargo check
+
 # Running go test 
 .PHONY: test-go-lib
 test-go-lib:

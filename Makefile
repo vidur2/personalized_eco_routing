@@ -33,8 +33,10 @@ test-go-lib:
 
 .PHONY: build-raspi
 build-raspi:
-	 CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 go build -v -o line_integrals_fuel_efficiency -ldflags="-extld=$CC"
+	CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 go build -v -o line_integrals_fuel_efficiency -ldflags="-extld=$CC"
 
 .PHONY: clean
 clean:
 	rm -rf main_shared main_static lib/libregression.so lib/libregression.a lib/regression/target
+	go clean
+	cd lib/regression && cargo clean

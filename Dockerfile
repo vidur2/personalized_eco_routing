@@ -6,8 +6,7 @@ WORKDIR /app
 # ENV GOPATH /app
 RUN go mod init app
 ADD ./ /app
-RUN export CC=gcc && cd lib/regression && cargo build --release && cp lib/regression/target/release/libregression.a lib/
-RUN CGO_ENABLED=1 GOOS=linux go install -a line_integrals_fuel_efficency
+ENV CGO_ENABLED 1
 RUN go build line_integrals_fuel_efficiency
 CMD ["app/line_integrals_fuel_efficency"]
 

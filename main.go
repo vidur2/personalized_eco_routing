@@ -1,8 +1,8 @@
 package main
 
 /*
-#cgo LDFLAGS: /Users/vidurmodgil/Desktop/ProgrammingProjects/line_integrals_fuel_efficiency/lib/libregression.a -ldl
-#include "/Users/vidurmodgil/Desktop/ProgrammingProjects/line_integrals_fuel_efficiency/lib/regression.h"
+#cgo LDFLAGS: /Users/vidurmodgil/Desktop/ProgrammingProjects/PersonalizedEcoRouting/line_integrals_fuel_efficiency/lib/libregression.a -ldl
+#include "/Users/vidurmodgil/Desktop/ProgrammingProjects/PersonalizedEcoRouting/line_integrals_fuel_efficiency/lib/regression.h"
 */
 import "C"
 

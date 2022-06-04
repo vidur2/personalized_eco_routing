@@ -14,6 +14,16 @@ type DataCoordReq struct {
 	Token        string                                   `json:"token"`
 }
 
+type LoadDataReq struct {
+	Email   string `json:"email"`
+	IdToken string `json:"token"`
+}
+
+type LoadDataRes struct {
+	Valid bool   `json:"valid"`
+	Error string `json:"error"`
+}
+
 type RegressionInputs struct {
 	XValues [][]float32 `json:"x_values"`
 	YValues []float32   `json:"y_values"`

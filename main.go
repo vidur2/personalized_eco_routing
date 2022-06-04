@@ -18,6 +18,8 @@ import (
 
 func handler(ctx *fasthttp.RequestCtx) {
 	switch string(ctx.Path()) {
+	case "/load_user_data":
+		datahandler.HandleLoadData(ctx)
 	case "/get_directions":
 		directionshandler.HandleDirections(ctx)
 	case "/update_model":

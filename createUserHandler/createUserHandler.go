@@ -8,7 +8,6 @@ import (
 	"line_integrals_fuel_efficiency/util"
 	"line_integrals_fuel_efficiency/util/types"
 
-	"github.com/sajari/regression"
 	"github.com/valyala/fasthttp"
 )
 
@@ -42,16 +41,12 @@ func HandleCreateUser(ctx *fasthttp.RequestCtx) error {
 	if err != nil {
 		return err
 	}
-	r := new(regression.Regression)
-	r.SetObserved("Actual Speed")
-	r.SetVar(0, "Speed Limit")
-	model, err := json.Marshal(r)
 
 	if err != nil {
 		client.Prisma.Disconnect()
 		return err
 	}
-	_, err = client.User.CreateOne(db.User.Email.Set(createUser.Username), db.User.DumpsModel.Set(string(model)), db.User.FuelEfficiency.Set(createUser.FuelEfficiency)).Exec(prismaCtx)
+	_, err = client.User.CreateOne(db.User.Email.Set(createUser.Username), db.User.DumpsModel.Set(""), db.User.FuelEfficiency.Set(createUser.FuelEfficiency)).Exec(prismaCtx)
 
 	client.Prisma.Disconnect()
 

@@ -1,12 +1,17 @@
 package googleApiInteraction
 
+/*
+#cgo LDFLAGS: /Users/vidurmodgil/Desktop/ProgrammingProjects/PersonalizedEcoRouting/line_integrals_fuel_efficiency/lib/libregression.a -ldl
+#include "/Users/vidurmodgil/Desktop/ProgrammingProjects/PersonalizedEcoRouting/line_integrals_fuel_efficiency/lib/regression.h"
+*/
+import "C"
+
 import (
-	"encoding/json"
 	"line_integrals_fuel_efficiency/prisma/db"
 	gascalc "line_integrals_fuel_efficiency/util/gas_calcs"
 	"math"
+	"strconv"
 
-	"github.com/sajari/regression"
 	"github.com/twpayne/go-polyline"
 )
 
@@ -72,13 +77,18 @@ func (l *LegElements) getSpeedLimit() float64 {
 func (l *LegElements) getGasConsumptionOverPolyline(user *db.UserModel) float32 {
 	// startElevation := 0.
 	// endElevation := ElevationInformation{}
-	var model regression.Regression
-	json.Unmarshal([]byte(user.DumpsModel), &model)
 	baseMpg := user.FuelEfficiency
 	unitsConsumed := float32(0.)
 
 	speedLimit := l.getSpeedLimit()
-	userSpeed, err := model.Predict([]float64{speedLimit})
+	speedNotFinal, err := C.predict_regression(C.CString(strconv.FormatFloat(speedLimit, 'f', 'g', 32)), C.CString(user.DumpsModel))
+	var userSpeed float64
+
+	if err != nil {
+		userSpeed = speedLimit
+	} else {
+		userSpeed, err = strconv.ParseFloat((C.GoString(speedNotFinal)), 32)
+	}
 
 	if err != nil {
 		userSpeed = speedLimit
